@@ -55,7 +55,7 @@ public class StockPricePercentageDeltaComputation {
                         System.out.println(c.element());
                     }
                 }))
-                /* Tried to Write the data on file but Failed,
+                /* Tried to Write the data on file but Failed, we will reworking on this
                 .apply(Window.into(FixedWindows.of(Duration.standardMinutes(1))))
                 .apply(TextIO.write().to(options.getOutputFile()).withHeader("Date,PriceDelta").withNumShards(1)) */
         ;
