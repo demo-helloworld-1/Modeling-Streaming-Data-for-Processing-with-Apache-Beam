@@ -10,6 +10,7 @@ import org.apache.beam.sdk.values.KV;
 public class TotalScoreComputationWithPipelineOptions {
     public static final String CSV_HEADER = "Id,Name,Physics,Chemistry,Maths,English,Biology,History";
 
+    // This is the interface which inherits/extends PipelineOption Class and we modify getInputFile and setInputFile methods
     public interface TotalScoreComputationOptions extends PipelineOptions {
 
         @Description("Path for the Input file")
@@ -27,6 +28,9 @@ public class TotalScoreComputationWithPipelineOptions {
     }
 
     public static void main(String[] args) {
+
+        /* Here we created our own custom Options when it has
+        ability to take the input and output from command line using args*/
         TotalScoreComputationOptions options = PipelineOptionsFactory.fromArgs(args).withValidation()
                 .as(TotalScoreComputationOptions.class);
         Pipeline pipeline = Pipeline.create(options);
