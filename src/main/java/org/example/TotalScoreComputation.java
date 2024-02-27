@@ -19,7 +19,7 @@ public class TotalScoreComputation {
                 .apply(ParDo.of(new FilterHeaderFn(CSV_HEADER)))
                 .apply(ParDo.of(new ComputeTotalScoreFn()))
                 .apply(ParDo.of(new ConvertIntoStringFn()))
-                .apply(TextIO.write().to("src/main/resources/Sink/student_scores.csv").withHeader("Name,Total").withNumShards(1));
+                .apply(TextIO.write().to("src/main/resources/Sink/TotalScoreComputationOutput").withHeader("Name,Total").withNumShards(1));
                 /* if you provide withNumShards as 1 it provides all the output data in one file*/
         pipeline.run().waitUntilFinish();
     }
