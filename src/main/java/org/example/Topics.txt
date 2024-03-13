@@ -1,0 +1,16 @@
+This file covers the filename with respect to the chapter.
+
+Chapter 3:
+Introducing ApacheBeam for Stream Processing
+
+Program 1: PipelineAndRunnerProperties
+Program 2: Filtering
+Program 3: Aggregation
+Program 4: TotalScoreComputation
+Program 5: TotalScoreComputationwithPipelineOptions
+Program 6: StockPricePercentageDeltaComputations
+Program 7: WordCount
+
+Chapter 4:
+Performing Windowing Operations
+

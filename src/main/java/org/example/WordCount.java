@@ -28,9 +28,8 @@ public class WordCount {
                         .into(TypeDescriptors.strings())
                         .via((KV<String, Long> wordCount) ->
                                 wordCount.getKey() + ": " + wordCount.getValue()))
-                .apply(TextIO.write().to("src/main/resources/Sink/WordCount").withNumShards(1));
+                .apply(TextIO.write().to("src/main/resources/Sink/WordCount/WordCount").withNumShards(1));
 
         pipeline.run().waitUntilFinish();
-
     }
 }

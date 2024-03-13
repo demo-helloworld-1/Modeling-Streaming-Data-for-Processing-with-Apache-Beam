@@ -13,7 +13,7 @@
             <artifactId>beam-sdks-java-core</artifactId>
             <version>2.54.0</version>
             <!-- Refer https://beam.apache.org/get-started/downloads/#2540-2024-02-14 for
-            latest version of repo else you will recieve error -->
+            latest version of repo else you will receive error -->
         </dependency>
 
         <dependency>
@@ -28,10 +28,7 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.20.0</version>
         </dependency>
-
     </dependencies>
-
-
 
     <build>
         <plugins>
