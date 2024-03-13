@@ -1,6 +1,8 @@
 package org.example;
 
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.io.FileIO;
+import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.transforms.Count;
@@ -15,6 +17,8 @@ import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.TimestampedValue;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+
+import java.util.Objects;
 
 public class FixedWindow {
     public static void main(String[] args) {
@@ -40,14 +44,24 @@ public class FixedWindow {
 
         PCollection<KV<String,Long>> output = windowedMakesTimes.apply(Count.perElement());
 
-        output.apply(ParDo.of(new DoFn<KV<String,Long>,Void> (){
+        output.apply(ParDo.of(new DoFn<KV<String,Long>,String> (){
 
-            @ProcessElement
+             @ProcessElement
             public void processElement(ProcessContext c, BoundedWindow window){
+
+                /*In Terminal Results
                 System.out.println(String.format(
                         "%s: %s %s", window.maxTimestamp(), c.element(). getKey(),c.element().getValue()));
+
+                 */
+                 c.output(String.format("%s %s %s",window.maxTimestamp(), Objects.requireNonNull(c.element()).getKey(), Objects.requireNonNull(c.element()).getValue()));
+
             }
-        }));
+        })).apply(TextIO.write().to("src/main/resources/Sink/FixedWindow/output").withWindowedWrites().withNumShards(1));
+                                /*
+                                If you use Windows platform the file/folder name with ":" are not supported, so you will end up with error.
+                                Ignore it and refer the temp files output.
+                                 */
 
         pipeline.run().waitUntilFinish();
 
