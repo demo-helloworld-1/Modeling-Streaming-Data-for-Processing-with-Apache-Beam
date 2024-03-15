@@ -17,6 +17,8 @@ import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.TimestampedValue;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Objects;
 
@@ -46,15 +48,24 @@ public class FixedWindow {
 
         output.apply(ParDo.of(new DoFn<KV<String,Long>,String> (){
 
-             @ProcessElement
+            @ProcessElement
             public void processElement(ProcessContext c, BoundedWindow window){
+
 
                 /*In Terminal Results
                 System.out.println(String.format(
                         "%s: %s %s", window.maxTimestamp(), c.element(). getKey(),c.element().getValue()));
 
                  */
-                 c.output(String.format("%s %s %s",window.maxTimestamp(), Objects.requireNonNull(c.element()).getKey(), Objects.requireNonNull(c.element()).getValue()));
+
+
+                /*Tried a new Code to create a file by altering the Timestamp but didnt resolved, so we need to use other file systems
+                like HDFS or GoogleCloudStorage*/
+                //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH-mm-ss.SSS'Z'");
+               // String formattedTimestamp = formatter.print(window.maxTimestamp());
+
+
+                c.output(String.format("%s %s %s",window.maxTimestamp(), Objects.requireNonNull(c.element()).getKey(), Objects.requireNonNull(c.element()).getValue()));
 
             }
         })).apply(TextIO.write().to("src/main/resources/Sink/FixedWindow/output").withWindowedWrites().withNumShards(1));
